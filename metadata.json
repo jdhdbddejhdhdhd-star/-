@@ -1,0 +1,6 @@
+{
+  "name": "مثلجات وحلويات الإيطالي",
+  "description": "نظام رقمي سحابي متكامل مع Firebase يشمل واجهة الويتر والصالة، واجهة الكاشير مع طباعة الفواتير وإدارة الأصناف، ومنيو الزبائن المحمي برمز QR للطاولات من 1 إلى 100",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

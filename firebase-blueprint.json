@@ -1,0 +1,35 @@
+{
+  "$schema": "https://firebase.google.com/docs/firestore/reference/rest/v1/projects.databases#Database",
+  "entities": {
+    "orders": {
+      "fields": {
+        "orderNumber": { "type": "string" },
+        "tableNumber": { "type": "string" },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "rating": { "type": "object" }
+      }
+    },
+    "menu_items": {
+      "fields": {
+        "nameAr": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "price": { "type": "number" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "badge": { "type": "string" }
+      }
+    },
+    "categories": {
+      "fields": {
+        "nameAr": { "type": "string" },
+        "iconName": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    }
+  }
+}
