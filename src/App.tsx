@@ -406,13 +406,14 @@ function CustomerApp({
         <HomeScreen
           tableNumber={tableNumber}
           onNavigateToMenu={(categoryId) => {
-            setActiveCategoryId(categoryId);
+            if (categoryId) setActiveCategoryId(categoryId);
             setCurrentView('menu');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           onSelectProduct={(item) => setSelectedProduct(item)}
           onQuickAdd={handleQuickAdd}
-          activeOrder={currentOrder}
+          onOpenBranches={() => setIsBranchesOpen(true)}
+          currentOrder={currentOrder}
           onOpenOrderStatus={() => setIsOrderStatusOpen(true)}
         />
       ) : (

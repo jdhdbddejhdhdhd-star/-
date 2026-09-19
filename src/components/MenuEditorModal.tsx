@@ -10,8 +10,10 @@ import {
   DollarSign,
   AlignLeft,
   Sparkles,
+  Upload,
 } from 'lucide-react';
 import { MenuItem, Category } from '../types';
+import { DEFAULT_FALLBACK_IMAGE } from './SafeImage';
 
 interface MenuEditorModalProps {
   isOpen: boolean;
@@ -225,21 +227,66 @@ export const MenuEditorModal: React.FC<MenuEditorModalProps> = ({
                 />
               </div>
 
-              {/* Image URL & Preview */}
+              {/* Image URL & Upload & Delete */}
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1">رابط صورة الصنف (URL)</label>
-                <input
-                  type="url"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                  placeholder="https://..."
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-[#7A153E]"
-                />
-                {image && (
-                  <div className="mt-2 w-20 h-20 rounded-xl overflow-hidden border border-stone-200 bg-stone-100">
-                    <img src={image} alt="معاينة" className="w-full h-full object-cover" />
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-bold text-stone-700">صورة الصنف</label>
+                  {image && image !== DEFAULT_FALLBACK_IMAGE && (
+                    <button
+                      type="button"
+                      onClick={() => setImage(DEFAULT_FALLBACK_IMAGE)}
+                      className="text-[11px] text-rose-600 hover:text-rose-700 font-bold flex items-center gap-1 cursor-pointer"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      <span>حذف الصورة</span>
+                    </button>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="url"
+                      value={image}
+                      onChange={(e) => setImage(e.target.value)}
+                      placeholder="رابط صورة مباشر https://..."
+                      className="flex-1 px-3 py-2 text-xs rounded-xl border border-stone-200 focus:outline-none focus:border-[#7A153E]"
+                    />
+                    <label className="px-3 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer shrink-0 border border-stone-200">
+                      <Upload className="w-3.5 h-3.5 text-[#7A153E]" />
+                      <span>رفع صورة</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                              const res = event.target?.result as string;
+                              if (res) setImage(res);
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
                   </div>
-                )}
+
+                  {image && (
+                    <div className="relative w-24 h-24 rounded-xl overflow-hidden border border-stone-200 bg-stone-100 group">
+                      <img
+                        src={image}
+                        alt="معاينة"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = DEFAULT_FALLBACK_IMAGE;
+                        }}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Badge */}
